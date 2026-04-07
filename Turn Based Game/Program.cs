@@ -135,8 +135,7 @@
                     Console.ForegroundColor = originalColor;
                     newHero.Damage += 10;
                 }
-
-                if (input == "attack" || (input != "attack" && input != "heal" && input != "focus") || (input == "focus" && usedFocusLastTurn))
+                else if (input == "attack" || (input != "attack" && input != "heal" && input != "focus") || (input == "focus" && usedFocusLastTurn))
                 {
                     usedFocusLastTurn = false;
                     Random randomHealingCapabilityChange = new();
@@ -144,7 +143,7 @@
                     healingCapability += randomHealingAddon;
 
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine("{0}'s Healing Capability has increased by {1}",newHero.Name,randomHealingAddon);
+                    Console.WriteLine("{0}'s Healing Capability has increased by {1}", newHero.Name, randomHealingAddon);
                     Console.ForegroundColor = originalColor;
 
                     newHero.Attack(newEnemy);
@@ -152,11 +151,11 @@
                     if (newEnemy.Health == 0)
                     {
                         Utility.WriteColoredText("You Win!", ConsoleColor.Cyan);
+                        Console.ReadLine();
                         break;
-                    }
-                }
 
-                if (input == "heal")
+                    }
+                } else if (input == "heal")
                 {
                     usedFocusLastTurn = false;
                     newHero.Heal(healingCapability);
@@ -214,6 +213,7 @@
                     if (newHero.Health == 0)
                     {
                         Utility.WriteColoredText("You Lose!", ConsoleColor.Red);
+                        Console.ReadLine();
                         break;
                     }
                 }
