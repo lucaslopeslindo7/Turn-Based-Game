@@ -103,8 +103,10 @@
             bool enemyHealedLastTurn = false;
             bool enemyFocusedLastTurn = false;
 
+            bool usedFocusLastTurn = false;
+
             Entity newHero = new("the2", 20, 400);
-            Entity newEnemy = new("Twinedhealer89", 5, 10000);
+            Entity newEnemy = new("The Great Evil", 20, 400);
 
             ConsoleColor originalColor = Console.ForegroundColor;
 
@@ -125,8 +127,18 @@
 
                 Console.WriteLine("\n");
 
-                if (input == "attack" || (input != "attack" && input != "heal" && input != "focus"))
+                if (input == "focus" && usedFocusLastTurn != true)
                 {
+                    usedFocusLastTurn = true;
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    Console.WriteLine("{0} Focuses on their strength. Damage increased by 10!", newHero.Name);
+                    Console.ForegroundColor = originalColor;
+                    newHero.Damage += 10;
+                }
+
+                if (input == "attack" || (input != "attack" && input != "heal" && input != "focus") || (input == "focus" && usedFocusLastTurn))
+                {
+                    usedFocusLastTurn = false;
                     Random randomHealingCapabilityChange = new();
                     int randomHealingAddon = randomHealingCapabilityChange.Next(2, 7);
                     healingCapability += randomHealingAddon;
@@ -144,16 +156,9 @@
                     }
                 }
 
-                if (input == "focus")
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                    Console.WriteLine("{0} Focuses on their strength. Damage increased by 10!", newHero.Name);
-                    Console.ForegroundColor = originalColor;
-                    newHero.Damage += 10;
-                }
-
                 if (input == "heal")
                 {
+                    usedFocusLastTurn = false;
                     newHero.Heal(healingCapability);
 
                     Random randomHealingCapabilityChange = new();
@@ -173,7 +178,7 @@
                     Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     Console.WriteLine("{0} Focuses on their strength. Damage increased by 10!", newEnemy.Name);
                     Console.ForegroundColor = originalColor;
-                    newEnemy.Damage += 1;
+                    newEnemy.Damage += 10;
                     continue;
                 }
 
